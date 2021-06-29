@@ -10,7 +10,6 @@ const int sensor=11;
 bool mov_detectado = false;
 
 void ICACHE_RAM_ATTR DetectaMovimento() {
-
   mov_detectado = true;
 }
 
