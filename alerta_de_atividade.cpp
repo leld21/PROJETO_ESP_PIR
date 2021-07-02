@@ -13,6 +13,12 @@
 const char* ID = "PORTALNET_D088";
 const char* SENHA = "18008920";
 
+// token do BOT que criei no telegram. ( controla o mesmo )
+#define BOTtoken "1785103108:AAHu0x9comV_b9O19VHauldebgOPuJMmaws"
+
+//meu ID do telegram
+#define CHAT_ID "848773169"
+
 //Definindo o sensor no pino D5
 const int sensor=D5;
 //iniciando a variavel de movimento detectado como falso
