@@ -19,6 +19,11 @@ const char* SENHA = "18008920";
 //meu ID do telegram
 #define CHAT_ID "848773169"
 
+X509List cert(TELEGRAM_CERTIFICATE_ROOT);
+WiFiClientSecure client;
+UniversalTelegramBot bot(BOTtoken, client);
+
+
 //Definindo o sensor no pino D5
 const int sensor=D5;
 //iniciando a variavel de movimento detectado como falso
@@ -31,8 +36,25 @@ void IRAM_ATTR DetectaMovimento() {
 
 void setup() {
   Serial.begin(115200);
-  pinMode(sensor, INPUT_PULLUP);
 
+  // coloca telegram como confiavel
+  client.setTrustAnchors(&cert);
+
+  pinMode(sensor, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(sensor), DetectaMovimento, RISING);
+
+  // Entrando no wifi
+  Serial.print("Conectando a: ");
+  Serial.println(ID);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ID, senha);
+
+  //ip
+  Serial.print("IP : ");
+  Serial.println(WiFi.localIP());
+
+  bot.sendMessage(CHAT_ID, "BOT INICIOU", "");
 
 }
 
