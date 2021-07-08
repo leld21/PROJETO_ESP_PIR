@@ -2,6 +2,7 @@
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
 #include <ArduinoJson.h>
+#include <time.h>
 
 /* Leandro Santana
     Projeto final da matéria Fundamentos de Sistemas Embarcados
@@ -36,6 +37,8 @@ void IRAM_ATTR DetectaMovimento() {
 
 void setup() {
   Serial.begin(115200);
+  Serial.setDebugOutput(true);
+  configTime(-3 * 3600, 0, "pool.ntp.org", "time.nist.gov");      // pega o horario
 
   // coloca telegram como confiavel
   client.setTrustAnchors(&cert);
@@ -48,18 +51,27 @@ void setup() {
   Serial.println(ID);
 
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ID, senha);
+  WiFi.begin(ID, SENHA);
 
   //ip
   Serial.print("IP : ");
   Serial.println(WiFi.localIP());
 
+  //sinaliza que o bot iniciou.
   bot.sendMessage(CHAT_ID, "BOT INICIOU", "");
 
 }
 
 void loop(){
-    
+  if(mov_detectado){
+    time_t now = time(nullptr);
+    bot.sendMessage(CHAT_ID, "Movimento detectado as:", "");
+    // mostra o mês, dia e hora
+    bot.sendMessage(CHAT_ID, ctime(&now), "");
+    Serial.println("Movimento detectado");
+    //reinicia
+    mov_detectado = false;
+  }
 }
 
 
