@@ -30,6 +30,8 @@ const int sensor=D5;
 //iniciando a variavel de movimento detectado como falso
 bool mov_detectado = false;
 
+int cont=0;
+
 //Função para modificar a variavel de movimento para verdade ( utiliza o cache da RAM interna )
 void IRAM_ATTR DetectaMovimento() {
   mov_detectado = true;
@@ -64,13 +66,25 @@ void setup() {
 
 void loop(){
   if(mov_detectado){
+    if(cont%2==0){
     time_t now = time(nullptr);
-    bot.sendMessage(CHAT_ID, "Movimento detectado as:", "");
+    bot.sendMessage(CHAT_ID, "O pet saiu as:", "");
     // mostra o mês, dia e hora
     bot.sendMessage(CHAT_ID, ctime(&now), "");
     Serial.println("Movimento detectado");
     //reinicia
     mov_detectado = false;
+    cont++;
+    }else{
+    time_t now = time(nullptr);
+    bot.sendMessage(CHAT_ID, "O pet voltou as:", "");
+    // mostra o mês, dia e hora
+    bot.sendMessage(CHAT_ID, ctime(&now), "");
+    Serial.println("Movimento detectado");
+    //reinicia
+    mov_detectado = false;
+    cont++;
+    }
   }
 }
 
