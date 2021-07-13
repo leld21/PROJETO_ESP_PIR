@@ -55,16 +55,24 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(ID, SENHA);
 
-  //ip
+  //aguarda a conecção ao wi-fi
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+
+  //mostra o ip
   Serial.print("IP : ");
   Serial.println(WiFi.localIP());
 
-  //sinaliza que o bot iniciou.
+  //sinaliza que o bot iniciou ( pelo telegram ).
   bot.sendMessage(CHAT_ID, "BOT INICIOU", "");
 
 }
 
 void loop(){
+  //usa o contador para dizer se o animal saiu ou entrou;
+  //se cont for par ele saiu, se for impar ele entrou.
   if(mov_detectado){
     if(cont%2==0){
     time_t now = time(nullptr);
