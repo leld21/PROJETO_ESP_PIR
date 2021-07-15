@@ -5,4 +5,8 @@ O projeto se baseia no uso de um esp8266 e um sensor de movimento para detectar 
   
 Para os testes foi utilizado platform.io pelo vscode, junto com as bibliotecas UniversalTelegramBot e ArduinoJson
 
+Links dos vídeos:
+1. https://drive.google.com/file/d/1jCIPeIoDO_b-SK73agGHmOAy5PB0vhM5/view?usp=sharing
+2. https://drive.google.com/file/d/1_zeDo5eHjvwut3ZVQv5R-aoJS0FKZdtJ/view?usp=sharing
+
 Aluno: Leandro Santana
