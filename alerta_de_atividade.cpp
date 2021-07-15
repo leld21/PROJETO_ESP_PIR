@@ -4,6 +4,7 @@
 #include <ArduinoJson.h>
 #include <time.h>
 
+
 /* Leandro Santana
     Projeto final da matéria Fundamentos de Sistemas Embarcados
     Utilizando ESP8266, sensor PIR e um BOT do Telegram.
@@ -20,6 +21,7 @@ const char* SENHA = "18008920";
 //meu ID do telegram
 #define CHAT_ID "848773169"
 
+//configurações para o telegram
 X509List cert(TELEGRAM_CERTIFICATE_ROOT);
 WiFiClientSecure client;
 UniversalTelegramBot bot(BOTtoken, client);
@@ -30,6 +32,7 @@ const int sensor=D5;
 //iniciando a variavel de movimento detectado como falso
 bool mov_detectado = false;
 
+//contador
 int cont=0;
 
 //Função para modificar a variavel de movimento para verdade ( utiliza o cache da RAM interna )
@@ -38,14 +41,17 @@ void IRAM_ATTR DetectaMovimento() {
 }
 
 void setup() {
+  //inicia o Serial junto com a definição de sua velocidade
   Serial.begin(115200);
   Serial.setDebugOutput(true);
-  configTime(-3 * 3600, 0, "pool.ntp.org", "time.nist.gov");      // pega o horario
+  configTime(-3 * 3600, 0, "pool.ntp.org", "time.nist.gov"); // pega o horario atual e o contigura para UTC-3
 
   // coloca telegram como confiavel
   client.setTrustAnchors(&cert);
 
+  // o pino do sensor é configurado como entrada
   pinMode(sensor, INPUT_PULLUP);
+  //interrupção
   attachInterrupt(digitalPinToInterrupt(sensor), DetectaMovimento, RISING);
 
   // Entrando no wifi
@@ -95,6 +101,3 @@ void loop(){
     }
   }
 }
-
-
-  
